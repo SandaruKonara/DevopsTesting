@@ -1,0 +1,29 @@
+name: Deploy HTML Website via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SECRETAAYU }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 3.109.167.74 >> ~/.ssh/known_hosts
+
+      - name: Deploy website files
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            ./ \
+            ubuntu@3.109.167.74:/www/wwwroot/sandarulanka.run.place/www/wwwroot/sandarulanka.run.place
