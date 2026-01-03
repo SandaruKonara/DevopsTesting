@@ -10,21 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. GitHub repo checkout
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SECRETAAYU }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 3.109.167.74 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 3.109.167.74 >> ~/.ssh/known_hosts
 
+      # 3. Deploy files to server
       - name: Deploy website files
         run: |
           rsync -avz --delete \
             --exclude='.git' \
             --exclude='.github' \
             ./ \
-            root@3.109.167.74:/www/wwwroot/sandarulanka.run.place/www/wwwroot/sandarulanka.run.place
-
+            root@3.109.167.74:/www/wwwroot/sandarulanka.run.place/
