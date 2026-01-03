@@ -26,6 +26,5 @@ jobs:
             --exclude='.git' \
             --exclude='.github' \
             ./ \
-            ubuntu@3.109.167.74:/www/wwwroot/sandarulanka.run.place/www/wwwroot/sandarulanka.run.place
+            root@3.109.167.74:/www/wwwroot/sandarulanka.run.place/www/wwwroot/sandarulanka.run.place
 
-#sss
